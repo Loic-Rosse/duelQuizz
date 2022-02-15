@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">duelQuizz</string>
+
+    <!-- Ecran principal -->
+    <string name="main_title_textbox">DuelQuizz</string>
+    <string name="main_addplayer_button">Ajouter un nouveau joueur</string>
+    <string name="main_player1_textbox">Veuillez saisir le 1er joueur ! </string>
+    <string name="main_player2_textbox">Veuillez saisir le 2ème joueur ! </string>
+    <string name="main_play_button">Jouer</string>
+
+    <!-- Ecran jeu -->
+
+
+</resources>
