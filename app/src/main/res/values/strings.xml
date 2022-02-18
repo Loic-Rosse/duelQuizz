@@ -9,6 +9,10 @@
     <string name="main_play_button">Jouer</string>
 
     <!-- Ecran jeu -->
-
-
+    <string name="game_menu_button">Menu</string>
+    <string name="game_replay_button">Rejouer</string>
+    <string name="game_score1_textbox">0</string>
+    <string name="game_score2_textbox">0</string>
+    <string name="game_player1_textbox">Player 1</string>
+    <string name="game_player2_textbox">Player 2</string>
 </resources>

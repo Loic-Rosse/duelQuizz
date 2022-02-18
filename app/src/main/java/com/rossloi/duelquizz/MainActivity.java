@@ -1,5 +1,6 @@
 package com.rossloi.duelquizz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,13 +41,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         player2.setVisibility(View.INVISIBLE);
     }
 
+    // Teste si le bouton est cliqué et execute
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ed_player1:
                 textPlayer2.setVisibility(View.VISIBLE);
                 player2.setVisibility(View.VISIBLE);
+                player2.requestFocus();
                 break;
             case R.id.bt_play:
+                startGame();
+                break;
         }
+    }
+    public void startGame(){
+        Intent intent = new Intent(MainActivity.this,GameActivity.class);
+        startActivity(intent);
     }
 }
