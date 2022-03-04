@@ -24,17 +24,22 @@ public class Question {
         this.reponse = reponse;
     }
 
-    @SuppressLint("Range")
+    // Curseur = tableau
     public Question(Cursor cursor){
-        question = cursor.getString(cursor.getColumnIndex("question"));
-        reponse = cursor.getInt(cursor.getColumnIndex("reponse"));
+        question = cursor.getString(cursor.getColumnIndexOrThrow("question"));
+        reponse = cursor.getInt(cursor.getColumnIndexOrThrow("reponse"));
     }
 
     public String getQuestion(){
         return question;
     }
 
-    public int isReponse(){
+    /**
+     * donne la réponse de la question
+     *
+     * @return la reponse de la question( 0 = faux, 1 = vrai)
+     */
+    public int getReponse() {
         return reponse;
     }
 }

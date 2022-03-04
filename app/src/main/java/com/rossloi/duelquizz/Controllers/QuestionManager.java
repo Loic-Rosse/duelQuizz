@@ -1,21 +1,25 @@
 package com.rossloi.duelquizz.Controllers;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.rossloi.duelquizz.Models.Question;
+import com.rossloi.duelquizz.Models.duelQuizzSQLiteOpenHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class QuestionManager {
 
-    private List<Question> questionList;
+    private List<Question>questionList;
 
     /**
      * Constructeur de classe qui initialise une nouvelle liste de questions
      * @param context Contexte d'application
      */
-    public QuestionManager(Context context){
+    public QuestionManager(Context context) {
         questionList = initQuestionList(context);
     }
 
@@ -28,17 +32,14 @@ public class QuestionManager {
 
     /**
      * Sélectionne la question à poser et la retire de la liste des questions
-     * @param questionList ArrayList de questions
      * @return un objet Question
      */
-    public Question getRandomQuestion(List<Question> questionList){
+    public Question getRandomQuestion(){
 
-    int randomIndex = getQuestionIndex(questionList);
-    Question question = questionList.get(randomIndex);
-
-    questionList.remove(randomIndex);
-
-    return question;
+        int rand = getQuestionIndex(questionList);
+        Question question = questionList.get(rand);
+        questionList.remove(rand);
+        return question;
     }
 
     /**
@@ -50,16 +51,9 @@ public class QuestionManager {
         return rand.nextInt(questionList.size());
     }
 
-    /**
-     * Renvoi vrai si toutes les questions ont été posées
-     * @param questionList Une arraylist de questions
-     * @return Une valeur boolean
-     */
-    public boolean isLastQuestion(List<Question> questionList){
-       if (questionList.isEmpty()){
-           return true;
-       }
-       return false;
+
+    public boolean isLastQuestion(){
+        return questionList.size() <= 0;
     }
 
     /**
@@ -75,5 +69,21 @@ public class QuestionManager {
         questionList.add(new Question("Bastien est mauvais à l'école", 1));
 
     }
-
+    /**
+     * Charge une liste de question depuis la DB.
+     * @param context Le contexte de l'application pour passer la query
+     * @return Une arraylist charger de Question
+     */
+    private ArrayList<Question> initQuestionList(Context context){
+        ArrayList<Question> listQuestion = new ArrayList<>();
+        duelQuizzSQLiteOpenHelper helper = new duelQuizzSQLiteOpenHelper(context);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query(true,"quiz",new String[]{"idQuiz","question","reponse"},null,null,null,null,"idquiz",null);
+        while(cursor.moveToNext()){
+            listQuestion.add(new Question(cursor));
+        }
+        cursor.close();
+        db.close();
+        return listQuestion;
+    }
 }
